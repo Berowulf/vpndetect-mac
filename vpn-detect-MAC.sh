@@ -16,9 +16,19 @@ tput setab 0;
 tput bold;
 echo "$(tput setaf 2)"
 ##
-echo "Before we start we need to specify your network adapter..."
-echo "We are going to run IFCONFIG, and we need you to type in whatever the current active adapter is "
-
+##Admin Check##
+##function 1##
+if [[ "$EUID" -ne 0 ]]; then
+ echo -e "This script interacts with folders that only the administrator has access  to.\n please run as root/with the sudo command."
+ echo
+ echo -e "We will attempt to do this for you."
+ echo
+ read -p 'Press enter to continue'
+##attempt fix##
+ clear
+ sudo bash ${0}
+fi
+clear
 
 read -p 'Are you currently connected to your VPN? (Y/N):' -e CHECK
 if [[ "$CHECK" = "Y" || "$CHECK" = "y" ]];then
